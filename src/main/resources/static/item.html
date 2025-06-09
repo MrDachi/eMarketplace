@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add New Item</title>
+</head>
+<body>
+<h1>Add a New Item</h1>
+<form th:action="@{/market}" th:object="${marketItemRequest}" method="post">
+    <div>
+        <label>Name:
+            <input type="text" th:field="*{name}" />
+        </label>
+        <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+    </div>
+    <div>
+        <label>Price:
+            <input type="number" step="0.01" th:field="*{price}" />
+        </label>
+        <p th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></p>
+    </div>
+    <div>
+        <label>Description:
+            <textarea th:field="*{description}"></textarea>
+        </label>
+        <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>
+    </div>
+    <div>
+        <label>Photo URL:
+            <input type="text" th:field="*{photoUrl}" />
+        </label>
+        <p th:if="${#fields.hasErrors('photoUrl')}" th:errors="*{photoUrl}"></p>
+    </div>
+    <div>
+        <button type="submit">Submit</button>
+    </div>
+</form>
+</body>
+</html>

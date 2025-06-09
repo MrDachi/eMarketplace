@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+    <meta charset="UTF-8">
+    <title>ახალი განცხადება - eMarketplace</title>
+</head>
+<body>
+<h1>ახალი განცხადების დამატება</h1>
+
+<form id="newItemForm">
+    <label>სახელი: <input type="text" name="name" required></label><br>
+    <label>ფასი: <input type="number" name="price" required></label><br>
+    <label>აღწერა:<br><textarea name="description" rows="4" cols="50" required></textarea></label><br>
+    <label>სურათის ბმული (photoUrl): <input type="url" name="photoUrl" required></label><br>
+    <button type="submit">დამატება</button>
+</form>
+
+<a href="/index.html">🔙 დაბრუნება მთავარ გვერდზე</a>
+
+<script>
+    document.getElementById("newItemForm").addEventListener("submit", function(e) {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        const item = Object.fromEntries(formData);
+
+        fetch('/market', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(item)
+        })
+        .then(res => {
+            if (res.ok) {
+                alert("განცხადება წარმატებით დაემატა!");
+                window.location.href = "/index.html";
+            } else {
+                alert("შეცდომა დამატებისას!");
+            }
+        });
+    });
+</script>
+</body>
+</html>

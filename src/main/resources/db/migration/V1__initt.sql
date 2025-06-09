@@ -1,0 +1,8 @@
+CREATE TABLE market_item (
+    id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+    name VARCHAR(100) NOT NULL,
+    price DECIMAL(10, 2) NOT NULL,
+    description TEXT,
+    photo_url VARCHAR(255),
+    submittion_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
