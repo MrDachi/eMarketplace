@@ -7,6 +7,8 @@ import com.entity.MarketItem;
 import com.repository.MarketItemRepository;
 import com.service.MarketItemService;
 import jakarta.validation.Valid;
+import org.hibernate.cache.spi.support.AbstractReadWriteAccess;
+import org.hibernate.mapping.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -34,10 +36,21 @@ public class MarketController {
     }
 
     @GetMapping
-    public Map<String, Object> getAll(@RequestParam(defaultValue = "0") int page,
-                                      @RequestParam(defaultValue = "10") int size){
-        Page<MarketItem> pageData = service.getAllItems(
-                PageRequest.of(page, size, Sort.by("submissionTime").descending()));
+    public Map<String, Object> getAll(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "dateDesc") String sort
+    ) {
+        Sort sorting;
+
+        switch (sort) {
+            case "dateAsc" -> sorting = Sort.by("submissionTime").ascending();
+            case "priceAsc" -> sorting = Sort.by("price").ascending();
+            case "priceDesc" -> sorting = Sort.by("price").descending();
+            default -> sorting = Sort.by("submissionTime").descending();
+        }
+
+        Page<MarketItem> pageData = service.getAllItems(PageRequest.of(page, size, sorting));
 
         Map<String, Object> body = new HashMap<>();
         body.put("items", pageData.getContent());
@@ -45,6 +58,7 @@ public class MarketController {
         body.put("totalPages", pageData.getTotalPages());
         return body;
     }
+
 
     @PostMapping
     public ResponseEntity<MarketItem> create(@Valid @RequestBody MarketItemRequest request) {
