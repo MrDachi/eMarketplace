@@ -1,26 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${item.name}">Item Detail</title>
+</head>
 <body>
-<h1>Marketplace</h1>
-<div>
-    Sort by:
-    <a th:href="@{/items(sortBy='date', dir='asc')}"
-       th:classappend="${currentSort=='date' and currentDir=='asc'} ? 'active'">Date ↑</a> |
-    <a th:href="@{/items(sortBy='date', dir='desc')}">Date ↓</a> |
-    <a th:href="@{/items(sortBy='price', dir='asc')}">Price ↑</a> |
-    <a th:href="@{/items(sortBy='price', dir='desc')}">Price ↓</a>
-</div>
-
-<table>
-    <thead><tr><th>Name</th><th>Price</th><th>Date</th><th>Seller</th></tr></thead>
-    <tbody>
-    <tr th:each="item : ${items}">
-        <td th:text="${item.name}"/>
-        <td th:text="${item.price}"/>
-        <td th:text="${#temporals.format(item.submittionTime, 'yyyy-MM-dd')}"/>
-        <td th:text="${item.user.username}"/>
-    </tr>
-    </tbody>
-</table>
+<h1 th:text="${item.name}"></h1>
+<img th:src="${item.photoUrl}" alt="photo" width="300" height="300"/>
+<p><b>Price:</b> <span th:text="${item.price}"></span></p>
+<p><b>Description:</b> <span th:text="${item.description}"></span></p>
+<p><b>Submission Time:</b> <span th:text="${item.submissionTime}"></span></p>
+<a href="/items">Back to items</a>
 </body>
 </html>

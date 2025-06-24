@@ -47,7 +47,7 @@ public class UserController {
         try {
             User u = userService.login(usernameOrEmail, password);
             session.setAttribute("user", u);
-            return "redireqt:/items";
+            return "redirect:/items";
         }catch (Exception e){
             ra.addFlashAttribute("error", e.getMessage());
             return "redirect:/login";

@@ -1,0 +1,67 @@
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <title>Marketplace Items</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<h1>Marketplace Items</h1>-->
+<!--&lt;!&ndash; Example: display items if you pass them from the controller &ndash;&gt;-->
+<!--<div th:if="${items}">-->
+<!--    <ul>-->
+<!--        <li th:each="item : ${items}">-->
+<!--            <b th:text="${item.name}"></b>:-->
+<!--            <span th:text="${item.price}"></span>-->
+<!--        </li>-->
+<!--    </ul>-->
+<!--</div>-->
+<!--<div th:if="${items == null}">-->
+<!--    <p>No items found.</p>-->
+<!--</div>-->
+<!--</body>-->
+<!--</html>-->
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+    <meta charset="UTF-8">
+    <title>eMarketplace - განცხადებები</title>
+</head>
+<body>
+<h1>ყველა განცხადება</h1>
+<div id="items-container">
+</div>
+
+<div id="pagination">
+</div>
+
+<a href="/new-item.html">➕ დაამატე ახალი განცხადება</a>
+
+<script>
+    fetch('/market?page=0')
+        .then(res => res.json())
+        .then(data => {
+            const container = document.getElementById("items-container");
+            data.items.forEach(item => {
+                const div = document.createElement("div");
+                div.innerHTML = `
+                    <h3><a href="/item.html?id=${item.id}">${item.name}</a></h3>
+                    <p>ფასი: ${item.price}₾</p>
+                    <p>${item.description.substring(0, 100)}...</p>
+                    <img src="${item.photoUrl}" alt="${item.name}" width="200">
+                    <hr>
+                `;
+                container.appendChild(div);
+            });
+        });
+</script>
+</body>
+</html>
