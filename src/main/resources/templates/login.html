@@ -2,11 +2,15 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
 <h1>Login</h1>
+
 <form th:action="@{/login}" method="post">
-    <input name="usernameOrEmail" placeholder="Username or Email" required/><br/>
-    <input name="password"         placeholder="Password"         required/><br/>
+    <input name="usernameOrEmail" placeholder="Username or Email" required/>
+    <input name="password" placeholder="Password" required/><br/>
     <button type="submit">Login</button>
 </form>
-<p th:if="${error}" th:text="${error}"/>
+
+<p th:if="${param.error}" style="color: red;">Invalid username or password</p>
 </body>
 </html>
+
+
